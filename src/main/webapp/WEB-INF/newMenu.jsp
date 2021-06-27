@@ -17,10 +17,10 @@
 		    <p class="text-danger"><form:errors path="user.*"/></p>
 		    
 		    <form:form method="POST" action="/create" modelAttribute="menu">
-		        
+		         <form:hidden path="user" value="${user.id}"/>
 		        <p>
 		            <form:label path="name">Name:</form:label>
-		            <form:input type="name" path="name"/>
+		            <form:input type="text" path="name"/>
 		        </p>
 		        <p>
 		            <form:label path="description">Description:</form:label>

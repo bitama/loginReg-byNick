@@ -19,7 +19,7 @@
               <thead>
                   <tr>
                      <th>Menu Item</th>
-                     <th>Description</th>
+                     <th>Uploaded By</th>
                      <th>Action</th>
                      
                   </tr>
@@ -28,7 +28,7 @@
                     <c:forEach items="${allMenus}" var="m">
                      <tr>
                         <td>${m.name}</td>
-                        <td>${m.description}</td>
+                        <td>${m.user.userName}</td>
                         <td><a href="/editMenu/${m.id}">Edit</a>
                         |<a href="/oneMenu/${m.id}">View</a>
                         |<a href="/delete/${m.id}">delete</a></td>
