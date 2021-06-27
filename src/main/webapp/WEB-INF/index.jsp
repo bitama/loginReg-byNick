@@ -19,6 +19,10 @@
 		    <form:form method="POST" action="/registration" modelAttribute="user">
 		        
 		        <p>
+		            <form:label path="userName">UserName:</form:label>
+		            <form:input type="userName" path="userName"/>
+		        </p>
+		        <p>
 		            <form:label path="email">Email:</form:label>
 		            <form:input type="email" path="email"/>
 		        </p>
