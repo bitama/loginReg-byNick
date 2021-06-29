@@ -35,8 +35,7 @@ public class HomeController {
 	public String index(@ModelAttribute("user")User user) {
 		return "index.jsp";
 	}
-//	This is for all Task and user who created them
-	@GetMapping("/success")
+
 	public String success(Model model,HttpSession session) {
 		Long id=(Long)session.getAttribute("userId");
 		model.addAttribute("user",userServ.findUserById(id));
@@ -45,7 +44,7 @@ public class HomeController {
 		return "success.jsp";
 	}
 	
-//	for create new Task
+
    @GetMapping("/newTask")
    public String newTask(@ModelAttribute("task") Task task) {
 	   return "newTask.jsp";
@@ -141,11 +140,7 @@ public class HomeController {
 	 
 	}
 	
-
-	
-	
-
-    @GetMapping("/logout")
+   @GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";

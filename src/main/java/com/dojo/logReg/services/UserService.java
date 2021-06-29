@@ -21,12 +21,12 @@ private TaskRepository taskRepo;
         this.userRepository = userRepository;
         this.taskRepo=taskRepo;
     }
-     //    create Task
+     
     public Task create(Task task) {
     	return taskRepo.save(task);
     }
     
-     //display all Task
+    
     public List<Task>getAllTasks(){
      return (List<Task>) taskRepo.findAll();
     }
@@ -78,12 +78,12 @@ private TaskRepository taskRepo;
         return userRepository.save(user);
     }
     
-    // find user by email
+    
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
     
-    // find user by id
+    
     public User findUserById(Long id) {
     	Optional<User> u = userRepository.findById(id);
     	
