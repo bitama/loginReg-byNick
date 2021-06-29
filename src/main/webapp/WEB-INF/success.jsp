@@ -18,22 +18,24 @@
           <table class="table table-dark table-striped">
               <thead>
                   <tr>
-                     <th>Idea</th>
-                     <th>Description<th>
-                      <th>Creator<th>
+                     <th>Task</th>
+                      <th>Creator</th>
+                      <th>Assignee</th>
+                      <th>Priority</th>
                   </tr>
               </thead>
               <tbody>
-                    <c:forEach items="${allIdeas}" var="i">
+                    <c:forEach items="${allTasks}" var="t">
                      <tr>
-                        <td><a href="/oneIdea/${i.id}">${i.name}</a></td>
-                        <td>${i.description}</td>
-                        <td>${i.user.userName}</td>
+                        <td><a href="/oneTask/${t.id}">${t.name}</a></td>
+                        <td>${t.user.userName}</td>
+                        <td>${t.assignee}</td>
+                        <td>${t.priority}</td>
                      </tr>
                     </c:forEach>
               </tbody>
           </table>
-          <a href="/newIdea">create Idea</a><br>
+          <a href="/newTask">create Task</a><br>
           
        </div>
 </body>

@@ -5,39 +5,41 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import com.dojo.logReg.models.Idea;
+import com.dojo.logReg.models.Task;
 import com.dojo.logReg.models.User;
-import com.dojo.logReg.repositories.IdeaRepository;
+import com.dojo.logReg.repositories.TaskRepository;
 import com.dojo.logReg.repositories.UserRepository;
 
 
 @Service
 public class UserService {
 private final UserRepository userRepository;
-private IdeaRepository ideaRepo;
+private TaskRepository taskRepo;
 
     
-    public UserService(UserRepository userRepository,IdeaRepository ideaRepo) {
+    public UserService(UserRepository userRepository,TaskRepository taskRepo) {
         this.userRepository = userRepository;
-        this.ideaRepo=ideaRepo;
+        this.taskRepo=taskRepo;
     }
-     //    create Idea
-    public Idea create(Idea idea) {
-    	return ideaRepo.save(idea);
-    }
-    
-     //display all Ideas
-    public List<Idea>getAllIdeas(){
-     return (List<Idea>) ideaRepo.findAll();
+     //    create Task
+    public Task create(Task task) {
+    	return taskRepo.save(task);
     }
     
-    public Idea viewOneIdea(Long id) {
-    	return ideaRepo.findById(id).orElse(null);
+     //display all Task
+    public List<Task>getAllTasks(){
+     return (List<Task>) taskRepo.findAll();
     }
+
+    public Task viewOneTask(Long id) {
+    	return taskRepo.findById(id).orElse(null);
+    	
+    }
+ 
     
     
-   public Idea getIdea(Long id) {
-		Optional<Idea> optional = ideaRepo.findById(id);
+   public Task getTask(Long id) {
+		Optional<Task> optional = taskRepo.findById(id);
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
@@ -47,26 +49,23 @@ private IdeaRepository ideaRepo;
     }
     
     
-   public Idea updateIdea(Long id,String name,String description) {
-    	Idea toUpdateIdea =ideaRepo.findById(id).orElseGet(null);
-    	if (toUpdateIdea==null) {
+   public Task updateTask(Long id,String name) {
+    	Task toUpdateTask =taskRepo.findById(id).orElseGet(null);
+    	if (toUpdateTask==null) {
 			return null;
 		}
     	else {
-    		toUpdateIdea.setName(name);
-    		toUpdateIdea.setDescription(description);
-    		
-    		
-    		return ideaRepo.save(toUpdateIdea);
+    		toUpdateTask.setName(name);
+    		return taskRepo.save(toUpdateTask);
     	}
       }
-        public  Idea updateIdea( Idea idea) {
-    	return ideaRepo.save(idea);
+        public  Task updateTask( Task idea) {
+    	return taskRepo.save(idea);
     }
         
         
-        public void deleteIdea(Long id) {
-    		ideaRepo.deleteById(id);
+        public void deleteTask(Long id) {
+    		taskRepo.deleteById(id);
     	}
     
     

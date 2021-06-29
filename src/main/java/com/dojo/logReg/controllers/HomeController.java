@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.dojo.logReg.models.Idea;
+import com.dojo.logReg.models.Task;
 import com.dojo.logReg.models.User;
 import com.dojo.logReg.services.UserService;
 import com.dojo.logReg.validations.UserValidator;
@@ -35,71 +35,71 @@ public class HomeController {
 	public String index(@ModelAttribute("user")User user) {
 		return "index.jsp";
 	}
-//	This is for all ideas and user who created them
+//	This is for all Task and user who created them
 	@GetMapping("/success")
 	public String success(Model model,HttpSession session) {
 		Long id=(Long)session.getAttribute("userId");
 		model.addAttribute("user",userServ.findUserById(id));
 //		model.addAttribute("thisUser",session.getAttribute("user"));//after for success page name
-		model.addAttribute("allIdeas",userServ.getAllIdeas());
+		model.addAttribute("allTasks",userServ.getAllTasks());
 		return "success.jsp";
 	}
 	
-//	for create new Idea
-   @GetMapping("/newIdea")
-   public String newIdea(@ModelAttribute("idea") Idea idea) {
-	   return "newIdea.jsp";
+//	for create new Task
+   @GetMapping("/newTask")
+   public String newTask(@ModelAttribute("task") Task task) {
+	   return "newTask.jsp";
    }
    
    @RequestMapping(value="/create",method=RequestMethod.POST)
-   public String create(@Valid @ModelAttribute("idea")Idea idea,BindingResult result,Model model,HttpSession session,RedirectAttributes redirectAttributes) {
-//	   redirectAttributes.addAttribute("error", "testErrors");
-	   if(result.hasErrors()) {
+   public String create(@Valid @ModelAttribute("task")Task task,BindingResult result,Model model,HttpSession session) {
+        if(result.hasErrors()) {
 		   System.out.println("inside create...............");
-		   return "newIdea.jsp";
+		   return "newTask.jsp";
 	   }else {
 		   
 		   Long userId=(Long)session.getAttribute("userId");
 		   User user =userServ.findUserById(userId);
-		   idea.setUser(user);
-		   userServ.create(idea);
-		   System.out.println(idea);
+		   task.setUser(user);
+		   userServ.create(task);
+		   System.out.println(task);
 		   return "redirect:/success";
 	   }
    }
    
    
-   @GetMapping("/oneIdea/{id}")
-   public String oneIdea(@PathVariable("id")Long id ,Model model,HttpSession session) {
-	   Long ids=(Long)session.getAttribute("userId");
-	   model.addAttribute("user",userServ.findUserById(ids));
-	   Idea idea =userServ.viewOneIdea(id);
-	   model.addAttribute("thisIdea",idea);
-	   return "oneIdea.jsp";
+   @GetMapping("/oneTask/{id}")
+   public String oneTask(@PathVariable("id")Long id ,Model model,HttpSession session) {
+	   Long tsk=(Long)session.getAttribute("userId");
+	   model.addAttribute("user",userServ.findUserById(tsk));
+	   Task task =userServ.viewOneTask(id);
+	   model.addAttribute("thisTask",task);
+	   return "oneTask.jsp";
    }
    
    
    
-   @GetMapping("editIdea/{id}")
-   public String editIdea(@PathVariable("id") Long id,@ModelAttribute("idea") Idea idea,Model model) {
-	   Idea ideaToshow = userServ.getIdea(id);
-	   model.addAttribute("thisIdea",ideaToshow);
-	   return "editIdea.jsp";
+   @GetMapping("editTask/{id}")
+   public String editTask(@PathVariable("id") Long id,@ModelAttribute("task") Task task,Model model) {
+	   Task taskToshow = userServ.getTask(id);
+	   model.addAttribute("thisTask",taskToshow);
+	   return "editTask.jsp";
    }
    
    
-   @RequestMapping(value="/updateIdea/{id}", method=RequestMethod.POST)
-   public String update(@PathVariable("id")Long id ,@Valid @ModelAttribute("idea") Idea idea,BindingResult result,Model model, HttpSession session, RedirectAttributes redirectAttributes) {
-//	   redirectAttributes.addAttribute("error", "testErrors");
+   
+   @RequestMapping(value="/updateTask/{id}", method=RequestMethod.POST)
+   public String updateTask(@PathVariable("id")Long id ,@Valid @ModelAttribute("task") Task task,BindingResult result,Model model, HttpSession session) {
+
        if (result.hasErrors()) {
-    	   Idea ideaToshow = userServ.getIdea(id);
-    	   model.addAttribute("thisIdea",ideaToshow);
-           return "editIdea.jsp";
+    	   Task taskToshow = userServ.getTask(id);
+    	   model.addAttribute("thisTask",taskToshow);
+           return "editTask.jsp";
        } else {
     	   Long ids=(Long)session.getAttribute("userId");
-    	   model.addAttribute("user",userServ.findUserById(ids));//Attension
-    	   idea.setUser(userServ.findUserById(ids));
-           userServ.updateIdea(idea);
+    	   model.addAttribute("user",userServ.findUserById(ids));
+    	   task.setUser(userServ.findUserById(ids));
+           userServ.updateTask(task);
            return "redirect:/success";
        }
    }
@@ -107,7 +107,7 @@ public class HomeController {
    
    @RequestMapping(value="/delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		userServ.deleteIdea(id);
+		userServ.deleteTask(id);
 		return "redirect:/success";
 	}
    
@@ -122,7 +122,6 @@ public class HomeController {
 		else {
 			userServ.registerUser(newUser);
 			session.setAttribute("userId", newUser.getId());
-//			session.setAttribute("user", newUser);//this goes after to diasplay name on sucsess page
 			return "redirect:/success";
 		}
 	}
@@ -139,20 +138,10 @@ public class HomeController {
 		 redirectAttributes.addFlashAttribute("error","Imvalid login attempt!!!");
 		 return "redirect:/";
 	}
+	 
 	}
 	
-//	@PostMapping("/makeMenu")
-//	public String makeMenu(@Valid @ModelAttribute("menu") Menu menu,BindingResult result ,Model model,HttpSession session){
-//		if(result.hasErrors()) {
-//          return"/newMenu.jsp";
-//		}else {
-//        Long userId=(Long)session.getAttribute("userId");
-//			User user=userServ.findUserById(userId);
-//			userServ.create(menu);
-//			menu.setUser(user);
-//		   return "redirect:/success";
-//	}
-//}
+
 	
 	
 

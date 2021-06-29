@@ -13,27 +13,32 @@
 </head>
 <body>
        <div class="container">
-          <h1>Create a new Idea</h1>
+          <h1>Create a new Task</h1>
           
               <c:out value="${error}"/>
-		    <p class="text-danger"><form:errors path="idea.*"/></p>
+		    <p class="text-danger"><form:errors path="task.*"/></p>
 		    
-		    <form:form method="POST" action="/create" modelAttribute="idea">
-		         <form:hidden path="user" value="${user.id}"/>
+		    <form:form method="POST" action="/create" modelAttribute="task">
+		         
 		        <p>
 		            <form:label path="name">Name:</form:label>
 		            <form:input type="text" path="name"/>
 		            <form:errors path= "name" class="text-danger"/>
 		        </p>
 		        <p>
-		            <form:label path="description">Description:</form:label>
-		            <form:textarea type="description" path="description"/>
-		            <form:errors path= "description" class="text-danger"/>
+		            <form:label path="assignee">Name:</form:label>
+		            <form:input type="text" path="assignee"/>
+		            <form:errors path= "assignee" class="text-danger"/>
+		        </p>
+		        <p>
+		            <form:label path="priority">Name:</form:label>
+		            <form:input type="text" path="priority"/>
+		            <form:errors path= "priority" class="text-danger"/>
 		        </p>
 		        
-		        <input type="submit" value="create Idea" class="btn btn-primary"/>
+		        <input type="submit" value="create task" class="btn btn-primary"/>
 		    </form:form>
-		    <a href="/success">Go back to success page</a>
+		    <a href="/success">Go back</a>
 		 </div>
 </body>
 </html>

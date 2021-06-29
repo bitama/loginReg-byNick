@@ -16,26 +16,29 @@
         <div class="container">
           <h1>Edit </h1>
     
-		    <p class="text-danger"><form:errors path="idea.*"/></p>
+		    <p class="text-danger"><form:errors path="task.*"/></p>
 		    
-		    <form:form method="POST" action="/updateIdea/${thisIdea.id}" modelAttribute="idea">
-		        <form:hidden path="user" value="${user.id}"/>
+		    <form:form method="POST" action="/updateTask/${thisTask.id}" modelAttribute="task">
+		        
 		        <p>
 		            <form:label path="name">Name:</form:label>
-		            <form:input type="name" path="name" value="${thisIdea.name}"/>
+		            <form:input type="name" path="name" value="${thisTask.name}"/>
 		            <form:errors path= "name" class="text-danger"/>
 		        </p>
 		        <p>
-		            <form:label path="description">Description:</form:label>
-		            <form:input type="description" path="description" value="${thisIdea.description }"/>
-		            <form:errors path= "name" class="text-danger"/>
+		            <form:label path="assignee">Assignee:</form:label>
+		            <form:input type="text" path="assignee" value="${thisTask.assignee }"/>
+		            <form:errors path= "assignee" class="assignee"/>
+		        </p>
+		        <p>
+		            <form:label path="priority">Priority:</form:label>
+		            <form:input type="text" path="priority" value="${thisTask.priority }"/>
+		            <form:errors path= "priority" class="priority"/>
 		        </p>
 		        
 		        <input type="submit" value="Edit" class="btn btn-primary"/>
 		    </form:form>
-		    
-		   <h1><a href="/delete/${thisIdea.id}">destroy</a></h1>
-		   <a href="/success">Go to success page</a>
+		    <a href="/success">Go to success page</a>
 		    
        </div>
 </body>
