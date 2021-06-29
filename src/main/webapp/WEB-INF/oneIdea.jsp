@@ -10,8 +10,9 @@
 </head>
 <body>
     <div class="container mt-4">
-        <h4>${thisMenu.name}</h4>
-        <h4>${thisMenu.description}</h4>
+        <h1> Created By:${user.userName}</h1>
+        <h1>${thisIdea.description}</h1><br>
+        <h1><a href="/editIdea/${id}">Edit</a></h1>
     </div>
 </body>
 </html>

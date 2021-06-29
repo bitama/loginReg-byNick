@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.dojo.logReg.models.Menu;
+import com.dojo.logReg.models.Idea;
 import com.dojo.logReg.models.User;
 import com.dojo.logReg.services.UserService;
 import com.dojo.logReg.validations.UserValidator;
@@ -35,62 +35,71 @@ public class HomeController {
 	public String index(@ModelAttribute("user")User user) {
 		return "index.jsp";
 	}
-//	This is for all menus and user who created them
+//	This is for all ideas and user who created them
 	@GetMapping("/success")
 	public String success(Model model,HttpSession session) {
 		Long id=(Long)session.getAttribute("userId");
 		model.addAttribute("user",userServ.findUserById(id));
 //		model.addAttribute("thisUser",session.getAttribute("user"));//after for success page name
-		model.addAttribute("allMenus",userServ.getAllMenus());
+		model.addAttribute("allIdeas",userServ.getAllIdeas());
 		return "success.jsp";
 	}
 	
-//	for create new menu
-   @GetMapping("/newMenu")
-   public String newMenu(@ModelAttribute("menu") Menu menu) {
-	   return "newMenu.jsp";
+//	for create new Idea
+   @GetMapping("/newIdea")
+   public String newIdea(@ModelAttribute("idea") Idea idea) {
+	   return "newIdea.jsp";
    }
    
    @RequestMapping(value="/create",method=RequestMethod.POST)
-   public String create(@Valid @ModelAttribute("menu")Menu menu,BindingResult result,Model model,HttpSession session) {
+   public String create(@Valid @ModelAttribute("idea")Idea idea,BindingResult result,Model model,HttpSession session,RedirectAttributes redirectAttributes) {
+//	   redirectAttributes.addAttribute("error", "testErrors");
 	   if(result.hasErrors()) {
 		   System.out.println("inside create...............");
-		   return "newMenu.jsp";
+		   return "newIdea.jsp";
 	   }else {
 		   
 		   Long userId=(Long)session.getAttribute("userId");
 		   User user =userServ.findUserById(userId);
-		   menu.setUser(user);
-		   userServ.create(menu);
-		   System.out.println(menu);
+		   idea.setUser(user);
+		   userServ.create(idea);
+		   System.out.println(idea);
 		   return "redirect:/success";
 	   }
    }
    
    
-   @GetMapping("/oneMenu/{id}")
-   public String oneMenu(@PathVariable("id")Long id ,Model model) {
-	   Menu menu =userServ.viewOneMenu(id);
-	   model.addAttribute("thisMenu",menu);
-	   return "oneMenu.jsp";
+   @GetMapping("/oneIdea/{id}")
+   public String oneIdea(@PathVariable("id")Long id ,Model model,HttpSession session) {
+	   Long ids=(Long)session.getAttribute("userId");
+	   model.addAttribute("user",userServ.findUserById(ids));
+	   Idea idea =userServ.viewOneIdea(id);
+	   model.addAttribute("thisIdea",idea);
+	   return "oneIdea.jsp";
    }
    
    
    
-   @GetMapping("editMenu/{id}")
-   public String editMenu(@PathVariable("id") Long id,@ModelAttribute("menu") Menu menu,Model model) {
-	   Menu menuToshow = userServ.getMenu(id);
-	   model.addAttribute("thisMenu",menuToshow);
-	   return "editMenu.jsp";
+   @GetMapping("editIdea/{id}")
+   public String editIdea(@PathVariable("id") Long id,@ModelAttribute("idea") Idea idea,Model model) {
+	   Idea ideaToshow = userServ.getIdea(id);
+	   model.addAttribute("thisIdea",ideaToshow);
+	   return "editIdea.jsp";
    }
    
    
-   @RequestMapping(value="/updateMenu/{id}", method=RequestMethod.POST)
-   public String update(@Valid @ModelAttribute("language") Menu menu, BindingResult result) {
+   @RequestMapping(value="/updateIdea/{id}", method=RequestMethod.POST)
+   public String update(@PathVariable("id")Long id ,@Valid @ModelAttribute("idea") Idea idea,BindingResult result,Model model, HttpSession session, RedirectAttributes redirectAttributes) {
+//	   redirectAttributes.addAttribute("error", "testErrors");
        if (result.hasErrors()) {
-           return "editMenu.jsp";
+    	   Idea ideaToshow = userServ.getIdea(id);
+    	   model.addAttribute("thisIdea",ideaToshow);
+           return "editIdea.jsp";
        } else {
-           userServ.updateMenu(menu);
+    	   Long ids=(Long)session.getAttribute("userId");
+    	   model.addAttribute("user",userServ.findUserById(ids));//Attension
+    	   idea.setUser(userServ.findUserById(ids));
+           userServ.updateIdea(idea);
            return "redirect:/success";
        }
    }
@@ -98,7 +107,7 @@ public class HomeController {
    
    @RequestMapping(value="/delete/{id}")
 	public String delete(@PathVariable("id") Long id) {
-		userServ.deleteMenu(id);
+		userServ.deleteIdea(id);
 		return "redirect:/success";
 	}
    

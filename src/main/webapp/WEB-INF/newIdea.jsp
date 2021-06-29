@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>   
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
+<%@ page isErrorPage="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,23 +13,27 @@
 </head>
 <body>
        <div class="container">
-          <h1>Let make a menu</h1>
-    
-		    <p class="text-danger"><form:errors path="user.*"/></p>
+          <h1>Create a new Idea</h1>
+          
+              <c:out value="${error}"/>
+		    <p class="text-danger"><form:errors path="idea.*"/></p>
 		    
-		    <form:form method="POST" action="/create" modelAttribute="menu">
+		    <form:form method="POST" action="/create" modelAttribute="idea">
 		         <form:hidden path="user" value="${user.id}"/>
 		        <p>
 		            <form:label path="name">Name:</form:label>
 		            <form:input type="text" path="name"/>
+		            <form:errors path= "name" class="text-danger"/>
 		        </p>
 		        <p>
 		            <form:label path="description">Description:</form:label>
 		            <form:textarea type="description" path="description"/>
+		            <form:errors path= "description" class="text-danger"/>
 		        </p>
 		        
-		        <input type="submit" value="create Menu" class="btn btn-primary"/>
+		        <input type="submit" value="create Idea" class="btn btn-primary"/>
 		    </form:form>
+		    <a href="/success">Go back to success page</a>
 		 </div>
 </body>
 </html>

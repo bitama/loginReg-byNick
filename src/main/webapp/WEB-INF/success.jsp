@@ -15,28 +15,26 @@
           <h1>Welcome ${user.userName}!!!!!!</h1>
           <a href="/logout">Logout</a>
           
-          <table class="table table-striped">
+          <table class="table table-dark table-striped">
               <thead>
                   <tr>
-                     <th>Menu Item</th>
-                     <th>Uploaded By</th>
-                     <th>Action</th>
-                     
+                     <th>Idea</th>
+                     <th>Description<th>
+                      <th>Creator<th>
                   </tr>
               </thead>
               <tbody>
-                    <c:forEach items="${allMenus}" var="m">
+                    <c:forEach items="${allIdeas}" var="i">
                      <tr>
-                        <td>${m.name}</td>
-                        <td>${m.user.userName}</td>
-                        <td><a href="/editMenu/${m.id}">Edit</a>
-                        |<a href="/oneMenu/${m.id}">View</a>
-                        |<a href="/delete/${m.id}">delete</a></td>
+                        <td><a href="/oneIdea/${i.id}">${i.name}</a></td>
+                        <td>${i.description}</td>
+                        <td>${i.user.userName}</td>
                      </tr>
                     </c:forEach>
               </tbody>
           </table>
-          <a href="/newMenu">create Menu</a>
+          <a href="/newIdea">create Idea</a><br>
+          
        </div>
 </body>
 </html>

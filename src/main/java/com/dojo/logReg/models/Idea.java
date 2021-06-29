@@ -17,18 +17,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="menus")
-public class Menu {
+@Table(name="ideas")
+public class Idea {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 	@NotEmpty(message="name is required")
 	@Size(min=3,message="Must be at least 3")
 	private String name;
-    
-    @NotEmpty(message="Description  is Required")
+	
+	@NotEmpty(message="Description  is Required")
     @Size(min=10,message="mustbe at least 10")
     private String description;
+    
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
@@ -37,10 +39,13 @@ public class Menu {
     private Date createdAt;
     private Date updatedAt;
     
-    public Menu() {
+    public Idea() {
     	
     }
-    public Menu(Long id,
+    
+   
+   
+public Idea(Long id,
 			@NotEmpty(message = "name is required") @Size(min = 3, message = "Must be at least 3") String name,
 			@NotEmpty(message = "Description  is Required") @Size(min = 10, message = "mustbe at least 10") String description,
 			User user, Date createdAt, Date updatedAt) {
@@ -51,10 +56,28 @@ public class Menu {
 		this.user = user;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		
-		
-		
 	}
+
+
+
+
+
+
+
+
+
+	public String getDescription() {
+	return description;
+}
+
+
+
+public void setDescription(String description) {
+	this.description = description;
+}
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -66,12 +89,6 @@ public class Menu {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
 	}
 	public User getUser() {
 		return user;

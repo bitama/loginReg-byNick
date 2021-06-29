@@ -5,39 +5,39 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import com.dojo.logReg.models.Menu;
+import com.dojo.logReg.models.Idea;
 import com.dojo.logReg.models.User;
-import com.dojo.logReg.repositories.MenuRepository;
+import com.dojo.logReg.repositories.IdeaRepository;
 import com.dojo.logReg.repositories.UserRepository;
 
 
 @Service
 public class UserService {
 private final UserRepository userRepository;
-private MenuRepository menuRepo;
+private IdeaRepository ideaRepo;
 
     
-    public UserService(UserRepository userRepository,MenuRepository menuRepo) {
+    public UserService(UserRepository userRepository,IdeaRepository ideaRepo) {
         this.userRepository = userRepository;
-        this.menuRepo=menuRepo;
+        this.ideaRepo=ideaRepo;
     }
-     //    create Menu
-    public Menu create(Menu menu) {
-    	return menuRepo.save(menu);
-    }
-    
-     //display all Menus
-    public List<Menu>getAllMenus(){
-     return (List<Menu>) menuRepo.findAll();
+     //    create Idea
+    public Idea create(Idea idea) {
+    	return ideaRepo.save(idea);
     }
     
-    public Menu viewOneMenu(Long id) {
-    	return menuRepo.findById(id).orElse(null);
+     //display all Ideas
+    public List<Idea>getAllIdeas(){
+     return (List<Idea>) ideaRepo.findAll();
+    }
+    
+    public Idea viewOneIdea(Long id) {
+    	return ideaRepo.findById(id).orElse(null);
     }
     
     
-   public Menu getMenu(Long id) {
-		Optional<Menu> optional = menuRepo.findById(id);
+   public Idea getIdea(Long id) {
+		Optional<Idea> optional = ideaRepo.findById(id);
 		if (optional.isPresent()) {
 			return optional.get();
 		} else {
@@ -47,25 +47,26 @@ private MenuRepository menuRepo;
     }
     
     
-   public Menu updateMenu(Long id,String name,String description) {
-    	Menu toUpdateMenu =menuRepo.findById(id).orElseGet(null);
-    	if (toUpdateMenu==null) {
+   public Idea updateIdea(Long id,String name,String description) {
+    	Idea toUpdateIdea =ideaRepo.findById(id).orElseGet(null);
+    	if (toUpdateIdea==null) {
 			return null;
 		}
     	else {
-    		toUpdateMenu.setName(name);
-    		toUpdateMenu.setDescription(description);
+    		toUpdateIdea.setName(name);
+    		toUpdateIdea.setDescription(description);
     		
-    		return menuRepo.save(toUpdateMenu);
+    		
+    		return ideaRepo.save(toUpdateIdea);
     	}
       }
-        public  Menu updateMenu( Menu menu) {
-    	return menuRepo.save(menu);
+        public  Idea updateIdea( Idea idea) {
+    	return ideaRepo.save(idea);
     }
         
         
-        public void deleteMenu(Long id) {
-    		menuRepo.deleteById(id);
+        public void deleteIdea(Long id) {
+    		ideaRepo.deleteById(id);
     	}
     
     

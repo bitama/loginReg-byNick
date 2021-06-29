@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page isErrorPage="true" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,23 +14,29 @@
 </head>
 <body>
         <div class="container">
-          <h1>Edit Menu</h1>
+          <h1>Edit </h1>
     
-		    <p class="text-danger"><form:errors path="user.*"/></p>
+		    <p class="text-danger"><form:errors path="idea.*"/></p>
 		    
-		    <form:form method="POST" action="/updateMenu/${thisMenu.id}" modelAttribute="menu">
-		        
+		    <form:form method="POST" action="/updateIdea/${thisIdea.id}" modelAttribute="idea">
+		        <form:hidden path="user" value="${user.id}"/>
 		        <p>
 		            <form:label path="name">Name:</form:label>
-		            <form:input type="name" path="name" value="${thisMenu.name}"/>
+		            <form:input type="name" path="name" value="${thisIdea.name}"/>
+		            <form:errors path= "name" class="text-danger"/>
 		        </p>
 		        <p>
 		            <form:label path="description">Description:</form:label>
-		            <form:input type="description" path="description" value="${thisMenu.description }"/>
+		            <form:input type="description" path="description" value="${thisIdea.description }"/>
+		            <form:errors path= "name" class="text-danger"/>
 		        </p>
 		        
 		        <input type="submit" value="Edit" class="btn btn-primary"/>
 		    </form:form>
-       </div><br>
+		    
+		   <h1><a href="/delete/${thisIdea.id}">destroy</a></h1>
+		   <a href="/success">Go to success page</a>
+		    
+       </div>
 </body>
 </html>
